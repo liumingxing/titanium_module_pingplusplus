@@ -1,106 +1,40 @@
-Appcelerator Titanium Mobile Module Project
-===========================================
+在国内做手机支付功能是一个老大难问题，还好ping++这家公司做了一些很好地工作，大大简化了支付功能的实现难度。此module是Appcelerator平台对ping++的封装
 
-This is a skeleton Titanium Mobile Mobile module project.
+使用方法：
+var pingpay = require("com.mamashai.pingxx");
+pingpay.addEventListener("ping_paid", function(e){
+	//code的值可能为success， fail, cancel, invalid, error
+	show_alert("提示", "收到了ping_paid信息 code: " + e.code + " text:" + e.text);
+});
+	
+function ios_resume(e){
+	var args = Ti.App.getArguments();
+	var code = args.url.split("=")[1];
+	pingpay.fireEvent("ping_paid", {code: code, text: ''});
+}
+Ti.App.addEventListener("resumed", ios_resume);
+win.addEventListener("close", function(e){
+    Ti.App.removeEventListener("ios_resumed", ios_resume);
+});
 
+btn.addEventListener("click", function(e){
+	pingpay.pay({
+		url: "http://bak.mamashai.com:3000/pay/make_payment",
+		order_no: "100023",
+		amount: "8",					//以分为单位
+		channel: "alipay", 				//可选项为：alipay,wx,upmp,jdpay_wap,百度钱包不支持
+		url_scheme: "bizsim"
+	});
+})
 
-MODULE NAMING
--------------
+参数解释：
+url：ping++需要在服务端进行配置，这个URL接受客户端的付款请求
+order_no：付款之前肯定得先生成订单，付款时传入订单号即可
+amount：订单要付款的金额，以分位单位，不是元
+channel：可选项为：alipay,wx,upmp,jdpay_wap,bfb安卓下百度钱包不支持
+url_scheme：ios下必须传入，付完款后跳回app用的，用xcode打开项目，项目属性->INFO中可以查看，IOS下微信支付对url_scheme参数有特殊要求，详情可见https://pingxx.com/guidance/client/sdk/ios
 
-Choose a unique module id for your module.  This ID usually follows a namespace
-convention using DNS notation.  For example, com.appcelerator.module.test.  This
-ID can only be used once by all public modules in Titanium.
+3：客户端付完款后，ping++会回调server端的notify url，这个比较简单，不涉及到本地端技术，在notify url中获得详细参数，回填各种信息（比如付款时间，付款是否成功等）到付款记录中即可。
 
-
-GET STARTED
-------------
-
-1. Edit manifest with the appropriate details about your module.
-2. Edit LICENSE to add your license details.
-3. Place any assets (such as PNG files) that are required anywhere in the module folder.
-4. Edit the timodule.json and configure desired settings.
-5. Code and build.
-
-
-DOCUMENTATION FOR YOUR MODULE
------------------------------
-
-You should provide at least minimal documentation for your module in `documentation` folder using the Markdown syntax.
-
-For more information on the Markdown syntax, refer to this documentation at:
-
-<http://daringfireball.net/projects/markdown/>
-
-
-TEST HARNESS EXAMPLE FOR YOUR MODULE
-------------------------------------
-
-The `example` directory contains a skeleton application test harness that can be
-used for testing and providing an example of usage to the users of your module.
-
-
-BUILDING YOUR MODULE
---------------------
-
-Simply run `titanium build --platform <name of platform> --build-type production --dir /path/to/module`.
-You can omit the --dir option if your working directory is in the module's project directory.
-
-
-INSTALL YOUR MODULE
--------------------
-
-Mac OS X
---------
-Copy the distribution zip file into the `~/Library/Application Support/Titanium` folder
-
-Linux
------
-Copy the distribution zip file into the `~/.titanium` folder
-
-Windows
--------
-Copy the distribution zip file into the `C:\ProgramData\Titanium` folder
-
-
-REGISTER YOUR MODULE
---------------------
-
-Register your module with your application by editing `tiapp.xml` and adding your module.
-Example:
-
-<modules>
-	<module version="0.1">com.mamashai.pingxx</module>
-</modules>
-
-When you run your project, the compiler will combine your module along with its dependencies
-and assets into the application.
-
-
-USING YOUR MODULE IN CODE
--------------------------
-
-To use your module in code, you will need to require it.
-
-For example,
-
-	var my_module = require('com.mamashai.pingxx');
-	my_module.foo();
-
-
-TESTING YOUR MODULE
--------------------
-
-To test with the script, execute:
-
-	titanium run --dir=YOURMODULEDIR
-
-This will execute the app.js in the example folder as a Titanium application.
-
-
-DISTRIBUTING YOUR MODULE
--------------------------
-
-You can choose to manually distribute your module distribution zip file or through the Titanium Marketplace!
-
-
-Cheers!
+4：注意事项
+百度钱包android module开发比较麻烦，干脆就没有支持。
