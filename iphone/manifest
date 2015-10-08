@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0
+apiversion: 2
+architectures: armv7 arm64 i386 x86_64
+description: 封装ping++的支付功能，简化appcelerator的支付功能。
+author: liumingxing
+license: MIT
+copyright: mamashai.com
+
+# these should not be edited
+name: pingxx_ios
+moduleid: com.mamashai.pingxx
+guid: 188c955e-3d78-4e29-bbc3-9ecc20cca761
+platform: iphone
+minsdk: 4.0.0.GA

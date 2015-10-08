@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0
+apiversion: 2
+architectures: armeabi armeabi-v7a x86
+description: 封装ping++的支付功能，简化Appcelerator应用支付功能的编写。
+author: liumingxing
+license: MIT
+copyright: mamashai.com
+
+# these should not be edited
+name: pingxx_android
+moduleid: com.mamashai.pingxx
+guid: 5ab13ab9-b804-4d3c-a286-0c901b97af89
+platform: android
+minsdk: 4.0.0.GA
