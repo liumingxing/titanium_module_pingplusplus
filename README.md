@@ -43,4 +43,4 @@ url_scheme：ios下必须传入，付完款后跳回app用的，用xcode打开�
 3：客户端付完款后，ping++会回调server端的notify url，这个比较简单，不涉及到本地端技术，在notify url中获得详细参数，回填各种信息（比如付款时间，付款是否成功等）到付款记录中即可。
 
 4：注意事项
-百度钱包android module开发比较麻烦，干脆就没有支持。
+百度钱包android module开发比较麻烦，在国内使用者群体也很小，干脆就没有支持。
