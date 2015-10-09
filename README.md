@@ -1,6 +1,6 @@
 # pingplusplus_module
 * ping++支付功能封装
-* 作者刘明星
+* 作者刘明星 lmxbitihero@126.com
 
 在国内做手机支付功能是一个老大难问题，还好ping++这家公司做了一些很好地工作，大大简化了支付功能的实现难度。此module是Appcelerator平台对ping++的封装，同时支持ios和android。
 
