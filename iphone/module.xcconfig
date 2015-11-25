@@ -17,6 +17,15 @@
 // OTHER_LDFLAGS[sdk=iphoneos4*]=$(inherited) -framework Foo
 // OTHER_LDFLAGS[sdk=iphonesimulator4*]=$(inherited) -framework Foo
 //
+
+
+OTHER_CFLAGS=$(inherited) -ObjC
+
+ping_path = "../../modules/iphone/com.mamashai.pingxx/1.0/platform/"
+
+OTHER_LDFLAGS=../../modules/iphone/com.mamashai.pingxx/1.0/platform/Alipay/libpingpp+alipay.a ../../modules/iphone/com.mamashai.pingxx/1.0/platform/Wx/libpingpp+wx.a ../../modules/iphone/com.mamashai.pingxx/1.0/platform/Wx/libWeChatSDK.a  -F$(ping_path)Alipay/ -framework AlipaySDK
+
+
 //
 // How to add a compiler define:
 //

@@ -130,24 +130,31 @@
             
             NSLog(@"~~~~~~~~~~~~~~~~~~~~~~33");
             
-            [weakSelf showAlertMessage:result];
+            //[weakSelf showAlertMessage:result];
             
-            [_app fireEvent:@"my_event0" withObject:nil];
+            //[_app fireEvent:@"my_event0" withObject:nil];
             
             NSLog(@"completion block: %@", result);
             if (error == nil) {
-                [_app fireEvent:@"my_event1" withObject:nil];
-                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"code",result, nil];
+                NSLog(@"error is nil");
+                //[_app fireEvent:@"my_event1" withObject:nil];
+                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:result, @"code", nil];
                 
                 [_app fireEvent:@"ping_paid" withObject:dict];
                 NSLog(@"PingppError is nil");
             } else {
-                [_app fireEvent:@"my_event2" withObject:nil];
-                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"code", error.code, @"text", [error getMsg], nil];
+                NSLog(@"error is not nil");
+                
+                //[_app fireEvent:@"my_event2" withObject:nil];
+                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"cancel", @"code", @"", @"text",  nil];
+                
+                NSLog(@"error is not nil 1");
                 
                 [_app fireEvent:@"ping_paid" withObject:dict];
                 
-                NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+                NSLog(@"error is not nil 2");
+                
+                //NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
             }
             
             
